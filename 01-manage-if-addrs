@@ -2,14 +2,18 @@
 #
 # $1 - interface name
 # $2 - up or down
-TMPFILE="/tmp/ifplugd.$1.tmp
+
+TMPFILE=/tmp/ifplugd.$1.tmp
+
 case $2 in
-      down)     ip addr flush dev $1
+        down)   ip addr flush dev $1
                 kill $(cat /var/run/vrrpd_${1}_*.pid)
                 ;;
         up)     ifquery $1 > $TMPFILE
-                ip addr add $(sed -n "s/^\s*address//p $TMPFILE") dev $1
+                ip addr add $(sed -n "s/^\s*address//p" $TMPFILE) dev $1
                 vrrpd $(sed -n "s/^\s*up vrrpd//p" $TMPFILE)
                 rm -f $TMPFILE
                 ;;
 esac
+
+exit 0
