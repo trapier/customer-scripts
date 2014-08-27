@@ -1,4 +1,8 @@
 #!/bin/bash
+# Copyright 2014 Cumulus Networks, Inc. All rights reserved.
+# Author: Trapier Marshall, trapier@cumulusnetworks.com
+# https://github.com/CumulusNetworks/customer-scripts/blob/master/cl-slot-sync
+
 
 # configuration file location
 sync_config="/mnt/persist/slotsync.conf"
@@ -44,7 +48,7 @@ if [ $unconfigured -eq 1 ]; then
     echo "# Comments start with #. Uncomment examples below to use them." >> "$sync_config"
     echo "#" >> "$sync_config"
     for example in 'motd' 'hostname' 'resolv.conf' 'network/interfaces' \
-        'quagga/' 'ssh/' 'passwd' 'group' 'shadow'; do
+        'quagga/' 'ssh/' 'passwd' 'group' 'shadow' 'cumulus/ports.conf' 'ldap.conf' 'nsswitch.conf'; do
         echo "#/etc/$example" >> "$sync_config"
     done
     echo "$sync_config must exist. A commented example has been created."
