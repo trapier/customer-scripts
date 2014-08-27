@@ -1,0 +1,90 @@
+#!/bin/bash
+
+# configuration file location
+sync_config="/mnt/persist/slotsync.conf"
+
+not_root=0
+unconfigured=0
+
+if [ $EUID -ne 0 ]; then
+    not_root=1
+fi
+
+if [ ! -r "$sync_config" ]; then
+    unconfigured=1
+fi
+
+# Help
+if [ "$#" -ne 0 ]; then
+    echo "USAGE: $(basename $0)"
+    echo "Utility to copy files from the currently active slot to the other slot."
+    echo "Accepts no command line arguments."
+    if [[ $not_root -eq 1 && $unconfigured -eq 1 ]]; then
+        echo -n "Run again with root privileges and then see "
+    else
+        echo -n "See "
+    fi
+    echo "$sync_config for details."
+    echo
+fi
+
+# Need root priviledges to run this script
+if [ $not_root -eq 1 ]; then
+   echo "You must have root privileges to run this command." 1>&2
+   exit 1
+fi
+
+# if it doesn't exist, create configuration file with commented examples
+if [ $unconfigured -eq 1 ]; then
+    echo "# Configuration file for $(basename $0)" > "$sync_config"
+    echo "#" >> "$sync_config"
+    echo "# A list of files and directories, one per line." >> "$sync_config"
+    echo "# Directories are copied recursively." >> "$sync_config"
+    echo "# To explicitly exclude a file or directory, start a line with '-'." >> "$sync_config"
+    echo "# Comments start with #. Uncomment examples below to use them." >> "$sync_config"
+    echo "#" >> "$sync_config"
+    for example in 'motd' 'hostname' 'resolv.conf' 'network/interfaces' \
+        'quagga/' 'ssh/' 'passwd' 'group' 'shadow'; do
+        echo "#/etc/$example" >> "$sync_config"
+    done
+    echo "$sync_config must exist. A commented example has been created."
+    exit 1
+fi
+
+# determine the currently active slot
+active_slot=$(cl-img-select |awk '/^active/ {print $4}')
+inactive_slot=$(cl-img-select |awk '! /^active/ {print $2}')
+
+# map source and target to active and inactive overlays
+source_overlay="/mnt/root-rw/config$active_slot"
+target_overlay="/mnt/root-rw/config$inactive_slot"
+
+# helper function to remove temporary files
+function clean_tmp {
+    rm $temp_include
+    rm $temp_exclude
+}
+
+# create temporary files for parsing slotsync.conf
+temp_include=$(mktemp --tmpdir=/tmp include.XXXXXX)
+temp_exclude=$(mktemp --tmpdir=/tmp exclude.XXXXXX)
+trap "clean_tmp" EXIT
+
+# parse includes out of slotsync.conf
+sed "/^-/d; s:#.*::; /^$/d; s:^:$source_overlay:" "$sync_config" > "$temp_include"
+
+# if excludes exist, then parse and handle them with "tar -X"
+if grep -q '^-' $sync_config; then
+    sed -n "s:#.*::; /^-/s:^-:$source_overlay:p" "$sync_config" > "$temp_exclude"
+    exclude_args="-X $temp_exclude"
+fi
+
+# copy specified files and directories.  conceptually:
+# "tar create from temp_include list (optionally excluding some) |tar extract to target_overlay"
+file_count=$(
+    tar -cmT "$temp_include" $exclude_args -f - 2>/dev/null|
+    tar -C "$target_overlay" --strip-components=3 -xvf - |
+    wc -l
+)
+
+echo "Copied $file_count files to slot $inactive_slot."
