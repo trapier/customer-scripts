@@ -48,7 +48,8 @@ if [ $unconfigured -eq 1 ]; then
     echo "# Comments start with #. Uncomment examples below to use them." >> "$sync_config"
     echo "#" >> "$sync_config"
     for example in 'motd' 'hostname' 'resolv.conf' 'network/interfaces' \
-        'quagga/' 'ssh/' 'passwd' 'group' 'shadow' 'cumulus/ports.conf' 'ldap.conf' 'nsswitch.conf'; do
+        'quagga/' 'ssh/' 'passwd' 'group' 'shadow' 'cumulus/ports.conf' 'ldap.conf' \
+        'network/interfaces.d/' 'nsswitch.conf'; do
         echo "#/etc/$example" >> "$sync_config"
     done
     echo "$sync_config must exist. A commented example has been created."
