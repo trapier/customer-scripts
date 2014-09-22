@@ -1,0 +1,33 @@
+#!/bin/bash
+searchList="lab.dianni.com repo.rtplab.test fubar.test"
+for repoHost in $searchList ; do
+    echo Searching for repoHost: $repoHost
+    count=`host $repoHost | grep -c "has address"`
+    #echo $count
+    if [ "$count" -gt 0  ] ; then
+       REPO=$repoHost
+    fi
+done
+    
+echo "Repo location found at:" $REPO
+echo
+echo "Downloading and adding repo key"
+
+wget -O - -q http://$REPO:8080/$REPO.gpg.key | apt-key add  -
+
+echo "Checking to see if repo is already installed"
+debExists=`egrep -c "deb http://$REPO:8080 testing main" /etc/apt/sources.list.d/support.list` 
+echo "debExists:" $debExists
+if [ "$debExists" -eq 0 ] 
+   then 
+   echo "Adding $REPO to /etc/apt/sources.list.d/support.list"
+   echo "deb http://$REPO:8080 testing main" >> /etc/apt/sources.list.d/support.list
+fi
+
+echo "Updating apt-get"
+echo 
+apt-get update
+echo "apt-get installing python-clshow"
+echo
+apt-get --yes install python-clshow    
+
