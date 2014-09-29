@@ -1,4 +1,11 @@
-#!/bin/bash
+#! /bin/bash
+# Copyright 2014 Cumulus Networks, Inc. All rights reserved.
+# Author: Sean Cavanaugh, sean@cumulusnetworks.com
+# https://github.com/CumulusNetworks/customer-scripts/blob/master/cumulus-ifplugd.shs
+#
+#       This file is used in the following:
+#       Knowledge Base: https://support.cumulusnetworks.com/hc/en-us/articles/202971633-Deploying-VRRP-on-Cumulus-Linux
+#
 
 clear
 
