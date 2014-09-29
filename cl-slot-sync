@@ -2,6 +2,28 @@
 # Copyright 2014 Cumulus Networks, Inc. All rights reserved.
 # Author: Trapier Marshall, trapier@cumulusnetworks.com
 # https://github.com/CumulusNetworks/customer-scripts/blob/master/cl-slot-sync
+#
+#   This file references KB: https://support.cumulusnetworks.com/hc/en-us/articles/201787826-What-Files-should-I-Back-Up-when-Updating-Cumulus-Linux-via-Image-Install-
+#   and KB: https://support.cumulusnetworks.com/hc/en-us/articles/202313473-Upgrading-Cumulus-Linux
+#
+#   README:
+#   This is a bash script that does not use /mnt/persist at all. It copies directly between the slots. The advantages of this
+#   are if a user makes a change to a file (lets say /etc/network/interfaces) but forgets that there is an older copy 
+#   (/mnt/persist/etc/network/interfaces) when the switch reboots the older copy is loaded overwriting the newer file. 
+#   I suggest clearing out /mnt/persist when using this script. Simply run it like the following:
+#
+#   root@sw1# bash cl-slot-sync
+#
+#   it will create a file at /mnt/persist/slotsync.conf where the files are chosen to be sync across slots. 
+#   Please uncomment them or add to the files.
+#
+#   root@sw1# bash cl-slot-sync 
+#   Copied 1 files to slot 2.
+#
+#   root@sw1:~ #
+#
+
+
 
 
 # configuration file location
