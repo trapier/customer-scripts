@@ -1,4 +1,9 @@
 #!/bin/bash
+# Copyright 2014 Cumulus Networks, Inc. All rights reserved.
+# Author: Sean Cavanaugh, sean@cumulusnetworks.com
+# https://github.com/CumulusNetworks/customer-scripts/blob/master/dumb-persistify.sh
+#
+#   This script is based off the KB article: https://support.cumulusnetworks.com/hc/en-us/articles/201787826-What-Files-should-I-Back-Up-when-Updating-Cumulus-Linux-via-Image-Install-
 cp --parents /etc/shadow /mnt/persist/
 cp --parents /etc/passwd /mnt/persist/
 cp -a --parents /etc/ssh/ /mnt/persist/
