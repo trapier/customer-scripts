@@ -1,4 +1,0 @@
-wget -O - -q http://lab.dianni.com:8080/lab.dianni.com.gpg.key | apt-key add  -
-echo "deb http://lab.dianni.com:8080 testing main" >> /etc/apt/sources.list.d/support.list
-apt-get update --allow-unauthenticated
-apt-get install python-clshow
