@@ -1,7 +1,7 @@
 # ~/.bashrc: executed by bash(1) for non-login shells.
 # 
-# path to get raw files to a switch
-# wget https://raw.githubusercontent.com/CumulusNetworks/customer-scripts/master/
+# path to get zip of all to switch.
+# wget https://github.com/CumulusNetworks/customer-scripts/archive/master.zip
 # 
 # Note: PS1 and umask are already set in /etc/profile. You should not
 # need this unless you want different defaults for root.
