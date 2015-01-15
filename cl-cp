@@ -1,6 +1,4 @@
 #!/bin/bash 
-# Copyright 2014 Cumulus Networks, Inc. All rights reserved.
-
 CP='cp -a  --parents '
 DEST='/mnt/persist/'
 
@@ -9,13 +7,14 @@ SAVE="
 /root/ 
 /home/ 
 /etc/ssh/ 
-/etc/network/interfaces.d/ 
+/etc/network/inferfaces.d/ 
 /etc/network/interfaces 
 /etc/quagga/Quagga.conf 
 /etc/quagga/daemons 
 /etc/quagga/vtysh.conf 
 /etc/cumulus/ports.conf
 /etc/default/clagd  
+/etc/default/isc-dhcp-relay
 /etc/apt/sources.list.d/bdd.list 
 /etc/apt/apt.conf 
 /etc/monit/monitrc 
@@ -31,12 +30,12 @@ SAVE="
 
 for foo in "$SAVE"
 do
-$CP $foo $DEST
+$CP -a $foo $DEST
 done
 
 tree $DEST
 
 echo "#-----------------------------------------------------------------------"
-echo "  You will forget /mnt/persist and it will HURT
+echo "  You will forget /mnt/persist and it wil HURT
 echo "  run  /root/bin/fix-persist after reboot to remove files
 echo "#-----------------------------------------------------------------------"
