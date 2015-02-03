@@ -1,6 +1,5 @@
 #!/bin/bash
-
-# Zendesk Case #382, Layer troubleshooting output
+# Copyright 2014 Cumulus Networks, Inc. All rights reserved.
 # Author: Stanley Karunditu (stanleyk@cumulusnetworks.com)
 # Layer 1 Troubleshooting Script
 # Syntax:

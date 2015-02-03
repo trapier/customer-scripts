@@ -1,8 +1,11 @@
 
 #!/bin/bash 
+<<<<<<< HEAD
 # Copyright 2014 Cumulus Networks, Inc. All rights reserved.
 # Author: Barnaby DiAnni, barnaby@cumulusnetworks.com
 
+=======
+>>>>>>> fec760ab6eb9ccde788e7078a8840a451705cd9d
 CP='cp -a  --parents '
 DEST='/mnt/persist/'
 
@@ -32,12 +35,12 @@ SAVE="
 
 for foo in "$SAVE"
 do
-$CP $foo $DEST
+$CP -a $foo $DEST
 done
 
 tree $DEST
 
 echo "#-----------------------------------------------------------------------"
-echo "  You will forget /mnt/persist and it will HURT
+echo "  You will forget /mnt/persist and it wil HURT
 echo "  run  /root/bin/fix-persist after reboot to remove files
 echo "#-----------------------------------------------------------------------"
