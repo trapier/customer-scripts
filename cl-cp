@@ -1,5 +1,7 @@
+
 #!/bin/bash 
 # Copyright 2014 Cumulus Networks, Inc. All rights reserved.
+# Author: Barnaby DiAnni, barnaby@cumulusnetworks.com
 
 CP='cp -a  --parents '
 DEST='/mnt/persist/'
@@ -9,17 +11,16 @@ SAVE="
 /root/ 
 /home/ 
 /etc/ssh/ 
+/etc/netns/
 /etc/network/interfaces.d/ 
+/etc/rc.local
 /etc/network/interfaces 
 /etc/quagga/Quagga.conf 
 /etc/quagga/daemons 
 /etc/quagga/vtysh.conf 
 /etc/cumulus/ports.conf
-/etc/default/clagd  
-/etc/apt/sources.list.d/bdd.list 
-/etc/apt/apt.conf 
-/etc/monit/monitrc 
-/etc/snmp/snmp.conf 
+/etc/default/isc-dhcp-relay
+/etc/apt/sources.list.d/support.list
 /etc/sudoers 
 /etc/resolv.conf 
 /etc/hostname 
