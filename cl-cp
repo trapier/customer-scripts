@@ -1,11 +1,6 @@
-
 #!/bin/bash 
-<<<<<<< HEAD
 # Copyright 2014 Cumulus Networks, Inc. All rights reserved.
-# Author: Barnaby DiAnni, barnaby@cumulusnetworks.com
 
-=======
->>>>>>> fec760ab6eb9ccde788e7078a8840a451705cd9d
 CP='cp -a  --parents '
 DEST='/mnt/persist/'
 
