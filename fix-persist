@@ -1,0 +1,8 @@
+#!/bin/bash
+# Copyright 2014 Cumulus Networks, Inc. All rights reserved.
+
+
+/bin/rm -rf /mnt/persist/*
+/bin/mkdir -p /mnt/persist/etc/cumulus
+/bin/cp -a /etc/cumulus/.license.txt /mnt/persist/etc/cumulus/
+/usr/bin/tree /mnt/persist/
