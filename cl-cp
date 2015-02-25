@@ -26,6 +26,8 @@ SAVE="
 /etc/group 
 /etc/passwd 
 /etc/shadow 
+/etc/default/openvswitch-vtep
+/usr/share/openvswitch/scripts/ovs-ctl-vtep
 "
 
 for foo in "$SAVE"

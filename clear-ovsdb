@@ -1,0 +1,12 @@
+#!/bin/bash
+
+# remove the OVSDB files
+rm -f /etc/openvswitch/*conf*
+rm -f /var/lib/openvswitch/*conf*
+
+# restart the OVS process to reset
+service openvswitch-vtep restart
+
+# Finish
+echo "OVSDB cleared!"
+
