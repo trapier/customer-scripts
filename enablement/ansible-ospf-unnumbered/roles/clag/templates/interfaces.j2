@@ -1,0 +1,59 @@
+{{ header_tmpl }}
+{% set intvars = interfaces[ansible_hostname] %}
+{% set loopback_ip = intvars.loopback -%}
+{% if intvars.bridges is defined -%}
+{% set swbridges = intvars.bridges -%}
+{% endif -%}
+
+auto lo
+iface lo inet loopback
+
+{% if loopback_ip is defined -%}
+auto lo:1
+iface lo:1
+  address {{ loopback_ip }}/32
+{% endif -%}
+
+auto eth0
+iface eth0 inet dhcp
+
+{% if intvars.int_unnumbered is defined -%}
+{% for item in intvars.int_unnumbered -%}
+
+auto {{ item }}
+iface {{ item }}
+  address {{ loopback_ip }}/32
+  
+{% endfor %}
+{% endif -%}
+
+
+{% if swbridges is defined -%}
+
+auto {{ swbridges.vlan_aware.name }}
+iface {{ swbridges.vlan_aware.name }}
+  bridge-vlan-aware yes
+  bridge_ports {{ swbridges.vlan_aware.members|join(' ') }}
+  bridge-vids {{swbridges.vlan_aware.vid_start}}-{{swbridges.vlan_aware.vid_stop}}
+  bridge-pvid {{swbridges.vlan_aware.pvid}}
+  bridge_stp on
+  
+
+ 
+{% if swbridges.vlan_aware.svi is defined -%}
+{% for name in swbridges.vlan_aware.svi -%}
+
+auto {{ name }}
+iface {{ name }}
+  address {{ swbridges.vlan_aware.svi[name].ip_and_mask }}
+
+{% endfor -%}
+{% endif -%}
+{% endif -%}
+
+
+ 
+
+
+
+

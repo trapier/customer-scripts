@@ -1,0 +1,46 @@
+interfaces:
+  spine1:
+    loopback: "10.2.1.3"
+    int_unnumbered: ["swp49", "swp50", "swp51", "swp52"]
+  spine2:
+    loopback: "10.2.1.4"
+    int_unnumbered: ["swp49", "swp50", "swp51", "swp52"]
+  leaf1:
+    loopback: "10.2.1.1"
+    int_unnumbered: ["swp1s0","swp1s1","swp1s2","swp1s3"]
+    bridges:
+      vlan_aware: 
+        name: "bridge"
+        pvid: "1"
+        vid_start: "1"
+        vid_stop: "2000"
+        members: ["swp32s0","swp32s1"]
+        access_ports: 
+          vlan10: ["swp32s0"]
+          vlan20: ["swp32s1"]
+        svi:
+          bridge.10:
+            ip_and_mask: "10.4.1.1/25"
+          bridge.20:
+            ip_and_mask: "10.4.1.129/25"
+  leaf2:
+    loopback: "10.2.1.2"
+    int_unnumbered: ["swp1s0","swp1s1","swp1s2","swp1s3"]
+    bridges:
+      vlan_aware: 
+        name: "bridge"
+        pvid: "1"
+        vid_start: "1"
+        vid_stop: "2000"
+        members: ["swp32s0","swp32s1"]
+        access_ports: 
+          vlan10: ["swp32s0"]
+          vlan20: ["swp32s1"]
+        svi:
+          bridge.10:
+            ip_and_mask: "10.4.2.1/25"
+          bridge.20:
+            ip_and_mask: "10.4.2.129/25"
+
+
+
