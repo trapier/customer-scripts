@@ -14,7 +14,7 @@ interfaces:
         pvid: "1"
         vid_start: "1"
         vid_stop: "100"
-        members: ["swp32s0","bond0"]
+        members: ["swp4","swp5", "swp6"]
         access_ports: 
           vlan10: ["swp4"]
         svi:
