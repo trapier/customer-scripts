@@ -1,4 +1,3 @@
-{{ header_tmpl }}
 zebra=yes
 bgpd=yes
 ospfd=yes
