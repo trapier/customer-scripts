@@ -22,7 +22,7 @@ interfaces:
             ip_and_mask: "10.1.10.2/24"
   leaf2:
     loopback: "10.2.1.2"
-    int_numbered:   i 
+    int_numbered: 
       swp1:
         ip_and_mask: "10.1.1.2/30"
       swp2:
