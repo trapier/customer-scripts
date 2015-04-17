@@ -1,5 +1,5 @@
 - name: License switch
-  cl_license: src="http://{{ cl_license_server }}/{{ ansible_hostname }}.lic"
+  cl_license: src="http://wbench/{{ ansible_hostname }}.lic"
   notify:
     - restart switchd
 
