@@ -29,10 +29,11 @@ iface {{ interface }}
 {% endif -%}
 
 {% if switch.bonds is defined -%}
-{% for item in switch.bonds -%}
-auto {{item}}
-iface {{item}}
-   bond-slaves {{ switch.bonds[item].members|join(' ') }}
+{% for bond_name in switch.bonds -%}
+auto {{bond_name}}
+iface {{bond_name}}
+   bond-slaves {{ switch.bonds[bond_name].members|join(' ') }}
+   address {{ switch.bonds[bond_name].address }}
    bond-mode 802.3ad
    bond-miimon 100
    bond-use-carrier 1
