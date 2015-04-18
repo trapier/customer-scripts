@@ -20,7 +20,7 @@ iface {{ interface }}
 {% endif -%}
 
 {% if switch.bridges is defined -%}
-{% for interface in switch.bridges.vlan_aware.members.keys() -%}
+{% for interface in switch.bridges.vlan_aware.members -%}
 
 auto {{ interface }}
 iface {{ interface }}
