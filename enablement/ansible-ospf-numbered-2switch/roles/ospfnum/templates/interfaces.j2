@@ -11,7 +11,7 @@ auto eth0
 iface eth0 inet dhcp
 
 {% if switch.int_numbered is defined -%}
-{% for interface in switch.int_numbered.keys() -%}
+{% for interface in switch.int_numbered -%}
 
 auto {{ interface }}
 iface {{ interface }}
