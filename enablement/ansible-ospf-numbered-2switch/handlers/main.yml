@@ -1,5 +1,6 @@
 - name: restart switchd
   service: name=switchd state=restarted
+  service: name=networking state=reloaded
 
 - name: reload networking
   service: name=networking state=reloaded
