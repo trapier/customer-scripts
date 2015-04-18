@@ -1,8 +1,5 @@
-{% set intvars = interfaces[ansible_hostname] %}
-{% set loopback_ip = intvars.loopback -%}
-{% if intvars.bridges is defined -%}
-{% set swbridges = intvars.bridges -%}
-{% endif -%}
+{% set switch = interfaces[ansible_hostname] %}
+{% set loopback_ip = switch.loopback -%}
 
 auto lo
 iface lo inet loopback
@@ -13,35 +10,56 @@ iface lo inet loopback
 auto eth0
 iface eth0 inet dhcp
 
-{% if intvars.int_numbered is defined -%}
-{% for intname in intvars.int_numbered.keys() -%}
+{% if switch.int_numbered is defined -%}
+{% for interface in switch.int_numbered.keys() -%}
 
-auto {{ intname }}
-iface {{ intname }}
-  address {{ intvars.int_numbered[intname].ip_and_mask }}
+auto {{ interface }}
+iface {{ interface }}
+
 {% endfor -%}
 {% endif -%}
 
+{% if switch.bridges is defined -%}
+{% for interface in switch.bridges.vlan_aware.members.keys() -%}
 
+auto {{ interface }}
+iface {{ interface }}
 
-{% if swbridges is defined -%}
+{% endfor -%}
+{% endif -%}
 
-auto {{ swbridges.vlan_aware.name }}
-iface {{ swbridges.vlan_aware.name }}
+{% if switch.bonds is defined -%}
+{% for item in switch.bonds -%}
+auto {{item}}
+iface {{item}}
+   bond-slaves {{ switch.bonds[item].members|join(' ') }}
+   bond-mode 802.3ad
+   bond-miimon 100
+   bond-use-carrier 1
+   bond-lacp-rate 1
+   bond-min-links 1
+   bond-xmit-hash-policy layer3+4
+{% endfor %}
+{% endif -%}
+
+{% if switch.bridges is defined -%}
+
+auto {{ switch.bridges.vlan_aware.name }}
+iface {{ switch.bridges.vlan_aware.name }}
   bridge-vlan-aware yes
-  bridge_ports {{ swbridges.vlan_aware.members|join(' ') }}
-  bridge-vids {{swbridges.vlan_aware.vid_start}}-{{swbridges.vlan_aware.vid_stop}}
-  bridge-pvid {{swbridges.vlan_aware.pvid}}
+  bridge_ports {{ switch.bridges.vlan_aware.members|join(' ') }}
+  bridge-vids {{switch.bridges.vlan_aware.vids}}
+  bridge-pvid {{switch.bridges.vlan_aware.pvid}}
   bridge_stp on
   
 
  
-{% if swbridges.vlan_aware.svi is defined -%}
-{% for name in swbridges.vlan_aware.svi -%}
+{% if switch.bridges.vlan_aware.svi is defined -%}
+{% for name in switch.bridges.vlan_aware.svi -%}
 
 auto {{ name }}
 iface {{ name }}
-  address {{ swbridges.vlan_aware.svi[name].ip_and_mask }}
+  address {{ switch.bridges.vlan_aware.svi[name].ip_and_mask }}
 
 {% endfor -%}
 {% endif -%}
