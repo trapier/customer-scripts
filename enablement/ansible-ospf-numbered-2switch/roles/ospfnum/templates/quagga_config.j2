@@ -7,7 +7,7 @@ interface lo
   
 interface bond0
   ip ospf network point-to-point
-  ip ospf area 0.0.0.
+  ip ospf area 0.0.0.0
 !
 {% if switch.bridges is defined -%}
 {% for item in switch.bridges.vlan_aware.svi -%}
