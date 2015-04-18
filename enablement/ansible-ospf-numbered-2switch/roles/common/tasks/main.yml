@@ -2,6 +2,7 @@
   cl_license: src="http://wbench/{{ ansible_hostname }}.lic"
   notify:
     - restart switchd
+    - reload networking
 
 - name: configure ptmd topology.dot
   copy: src=topology.dot dest=/etc/ptm.d/topology.dot
