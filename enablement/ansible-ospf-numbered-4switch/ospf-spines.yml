@@ -3,7 +3,7 @@
   user: root
   roles:
     - common
-    - ospfunnum
+    - ospfnum
   handlers:
     - include: handlers/main.yml
 
