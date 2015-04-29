@@ -31,7 +31,7 @@ iface {{item}}
 {% for intname in intvars.int_numbered.keys() -%}
 
 auto {{ intname }}
-iface {{ intname }} inet static
+iface {{ intname }}
   address {{ intvars.int_numbered[intname].ip_and_mask }}
 {% endfor -%}
 {% endif -%}
