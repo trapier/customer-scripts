@@ -1,12 +1,4 @@
 ---
-- hosts: spine
-  user: root
-  roles:
-    - common
-    - ospfunnum
-  handlers:
-    - include: handlers/main.yml
-
 - hosts: leaf
   user: root
   roles:
