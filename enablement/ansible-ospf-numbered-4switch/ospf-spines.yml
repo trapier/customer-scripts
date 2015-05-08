@@ -1,9 +1,0 @@
----
-- hosts: spine
-  user: root
-  roles:
-    - common
-    - ospfnum
-  handlers:
-    - include: handlers/main.yml
-

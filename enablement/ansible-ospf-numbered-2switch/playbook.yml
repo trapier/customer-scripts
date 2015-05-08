@@ -1,8 +1,0 @@
----
-- hosts: leaf
-  user: root
-  roles:
-    - common
-    - ospfnum
-  handlers:
-    - include : handlers/main.yml
